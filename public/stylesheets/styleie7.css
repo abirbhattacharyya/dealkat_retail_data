@@ -1,0 +1,47 @@
+.capsuleCenter ul {
+	list-style-type:none;
+	margin:0 0 0 -2px;
+}
+ul.alert {
+	list-style-type:none;
+	margin:25px 0 15px 30px;
+}
+
+.homeBlock a, .block {
+	padding: 5px 20px 5px 20px;
+	margin:15px 0 0 0;
+	width:auto;
+	text-align: center;
+	display:inline-block;
+	background: #006699;
+	color: #FFF;
+	border: 1px solid #ccc;
+	text-decoration: none;
+	}
+.radiobg input {
+	display: inline;
+	margin: 0 5px 0 5px;
+	background-image: url(/images/radiobg.gif);
+	}
+.fixedSide ul {
+	position: relative;
+	right:-40px;
+	padding: 0;
+	margin:0;
+}
+.fixedSide ul li, .fixedSide ul li a  {
+	height: auto;
+	padding-top:10px
+	padding-bottom:10px;
+}
+.fixedSide ul li a:hover {
+	color: #333;
+	background:#FFF;
+}
+
+
+.chatTop h3 {
+	color: #006699;
+	padding-left: 30px;
+	height: 20px;
+	}

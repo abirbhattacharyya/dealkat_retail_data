@@ -1,0 +1,13 @@
+<%
+    @title = "Upload your data securely for the best results."
+    @sub_title = ""
+%>		
+    <% form_tag product_action_path("upload"), :multipart => true  do %>
+            <div class="required">
+                <textarea class="uploadtextarea">Make sure your data is in a CSV file and includes item level variables.  Include: Category, Class, Sub-Class, Cost, Margin, UPC Code, Age, MSRP, Promotional Price, Model, Color.</textarea>
+                <h4><label>Choose file:</label></h4>
+                <%= file_field_tag :upload %> <br />
+            </div>
+            <%= submit_tag "Go!", :class => "block" %> &nbsp; <%= link_to "Cancel", "javascript:history.go(-1)" %>
+
+    <% end %>

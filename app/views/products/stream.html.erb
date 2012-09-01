@@ -1,0 +1,11 @@
+<%
+    @title = "Retail Analytics"
+    @sub_title = ""
+%>
+
+
+	<div class="note">Use web based analytics, to leverage data to make better decisions, thereby reducing costs, increasing revenues.</div>
+	<div id="playpause"><a ><span id="play"><p>Play</p></span></a> <a><span id="pause"><p>Pause</p></span></a> <p id="playpause_msg"></p></div>
+        
+        <%= render :partial => "controls/graph", :object => @product1, :locals => {:id => @id + 1} %>
+        <%= render :partial => "controls/graph", :object => @product2, :locals => {:id => @id} %>

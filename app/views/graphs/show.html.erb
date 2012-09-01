@@ -1,0 +1,9 @@
+<%= render :partial => "controls/graph", :object => @graph.chart_type.nil? ? @graph.url : @graph, :locals => {:id => @graph.id} %>
+<div class="ratecomment" id="ratecomment_<%=@graph.id%>">
+      <div id="rating_<%=@graph.id%>" class="ratenav"><%=@like%><span class="ilike" onclick="rate_up(<%=@graph.id%>)">Like</span><%=@dislike%><span class="idislike" onclick="rate_down(<%=@graph.id%>)">Dislike</span> <a href="#">Analyze</a> <%=link_to "Share", product_action_path("send", @graph.id)%> <span onclick="show_hide('comment_<%=@graph.id%>')">Comment</span>  <span class="error"><%=@message %></span></div>
+      <span id="comment_<%=@graph.id%>" style="display:none">
+          <% form_tag graph_action_path(@graph.id) do %><%= text_area_tag :comment, "", :class => "comment" %><%= submit_tag :Submit, :class => "block" %><% end %>
+      </span>
+      <%= render :partial => "controls/comments", :object => @comments %>
+</div>
+<p id="last_<%=@graph.id%>"></p>

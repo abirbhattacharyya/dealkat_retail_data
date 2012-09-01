@@ -1,0 +1,3 @@
+<% for graph in @graphs %>
+    <%= render :partial => "controls/graph", :object => graph.url, :locals => {:id => graph.id} %>
+<% end %>

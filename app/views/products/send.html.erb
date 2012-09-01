@@ -1,0 +1,25 @@
+<div class="w500">
+    <div class="Form">
+        <% form_tag product_action_path("send_capsule",params[:id]) do |f| %>
+            <div class="required long">
+                <h4><%= label_tag :name, 'Stay anonymous or use your name:' %></h4>
+                <%= text_field_tag :name, params[:name] %>
+                <span></span>
+            </div>
+
+            <div class="required long">
+                <h4><%= label_tag :emails, 'Separate multiple emails with commas:' %></h4>
+                <%= text_area_tag :emails, params[:emails] %>
+                <span></span>
+            </div>
+
+            <div class="required long">
+                <h4><%= label_tag :message, 'Write anything or nothing. Your choice' %></h4>
+                <%= text_area_tag :message, params[:message] %>
+                <span></span>
+            </div>
+
+            <%= submit_tag "Send", :class => "block" %> <%= link_to "Cancel", "javascript:history.go(-1);" %>
+        <% end %>
+    </div><!-- /Form -->
+</div><!-- /content -->

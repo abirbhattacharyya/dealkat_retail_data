@@ -1,0 +1,13 @@
+<% @comments = comments %>
+
+<% if @comments.size < 1 %>
+    <div>No comments yet. Be the first one to comment</div>
+<% else %>
+      <% for comment in @comments %>
+          <% @class = ((comment.id.to_i % 2) == 1) ? "c1" : "" %>
+          <% content_tag :div, :class => @class do -%>
+               <%= comment.comment %>
+          <% end -%>
+          <!--div class="c1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie sollicitudin lectus sit amet malesuada. Maecenas aliquet accumsan iaculis. Duis accumsan volutpat nulla, eu luctus elit rutrum in.</div-->
+      <% end %>
+<% end %>

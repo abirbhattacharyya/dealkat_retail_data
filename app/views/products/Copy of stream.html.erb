@@ -1,0 +1,65 @@
+	<div class="note">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nec ornare massa. Pellentesque lorem nibh, sollicitudin ut scelerisque in, elementum et leo. Cras ullamcorper, nisi a vestibulum feugiat, leo justo porttitor sapien, </div>
+	<div id="playpause"><a ><span id="play"><p>Play</p></span></a> <a><span id="pause"><p>Pause</p></span></a> <p>Click to pause.</p></div>
+        
+        <%= render :partial => "controls/graph", :object => @product1, :locals => {:id => @id + 1} %>
+        <%= render :partial => "controls/graph", :object => @product2, :locals => {:id => @id} %>
+        
+<script type="text/javascript">
+    var pause = 0;
+    var idtimer = 0;
+    var id = <%= @id %> ;
+    idtimer = setInterval(function(){ pullticker(id+=1);}, 4000);
+//    idtimer = setInterval(function(){ pause_tickers();}, 4000);
+    var bindplaypause = function(){ 
+      $('#pause').bind('click', function(event){
+        pause_tickers();
+      });
+
+      $('#play').bind('click', function(event){
+        play_tickers();
+      });
+    }
+    bindplaypause();
+    
+    function play_tickers()
+    {
+        if (pause == 1){
+          idtimer = setInterval(function(){ pullticker(id+=1);}, 4000);
+          pause = 0;
+        }
+    }
+
+    function pause_tickers()
+    {
+        if (pause == 0){
+          clearInterval(idtimer);
+          pause =1;
+        }
+    }
+    
+    function pullticker(id)
+    {
+          //ajax call
+//          $.post("/products/new_graph/" + id, function(xml){
+//                if (xml.length > 0)
+                {
+//                      $('#ticker_' + (id-1)).remove();
+//                      $(xml).insertBefore($('#ticker_' + id));
+                }
+//          });
+
+          new Ajax.Request("/products/new_graph/" + id,   
+              {     
+                    method:'get',     
+                    onSuccess: function(transport){       
+                        var response = transport.responseText || "no response text";       
+                          $('#ticker_' + (id-1)).remove();
+                          $(response).insertBefore($('#ticker_' + id));
+    //                    alert("Success! \n\n" + response);     
+                    },     
+                    onFailure: function(){ /*alert('Something went wrong...')*/ }   
+              }
+          );
+    }
+</script>
+      

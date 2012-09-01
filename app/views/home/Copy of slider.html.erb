@@ -1,0 +1,80 @@
+<script type="text/javascript">
+        var $j = jQuery.noConflict();
+//      Use jQuery via $j(...)
+
+	$j(document).ready(function(){
+                slider1Min = slider2Min = 1;
+                slider1Max = slider2Max = 100;
+		$j(".slider1").slider({
+			'min': slider1Min,
+			'max': slider1Max,
+			'slide': function(e, ui){ 
+                                id = document.getElementById('graph_id').innerHTML;
+				$j('#slider-input1').val(ui.value);
+                                new Ajax.Request("/products/new_slider_graph/" + id,   
+                                    {     
+                                          method:'get',     
+                                          onSuccess: function(transport){       
+                                              var response = transport.responseText || "no response text";       
+                                                document.getElementById('graph').innerHTML = response;
+//                                              alert("Success! \n\n" + response);     
+                                          },     
+                                          onFailure: function(){ /*alert('Something went wrong...')*/ }   
+                                    }
+                                );
+			}
+		});
+		$j('#slider-input1').blur(function(){
+			var slider1Value = $j("#slider-input1").attr("value"); 
+			if(slider1Value >= slider1Min && slider1Value <= slider1Max){
+				$j('.slider1').slider('moveTo',slider1Value);
+			}else{
+				alert('Please enter a value between '+slider1Min+' and '+slider1Max);
+				return false;
+			}
+		});
+                
+		$j(".slider2").slider({
+			'min': slider2Min,
+			'max': slider2Max,
+			'slide': function(e, ui){ 
+                                id = document.getElementById('graph_id').innerHTML;
+				$j('#slider-input2').val(ui.value);
+                                new Ajax.Request("/products/new_slider_graph/" + id,   
+                                    {     
+                                          method:'get',     
+                                          onSuccess: function(transport){       
+                                              var response = transport.responseText || "no response text";       
+                                                document.getElementById('graph').innerHTML = response;
+//                                              alert("Success! \n\n" + response);     
+                                          },     
+                                          onFailure: function(){ /*alert('Something went wrong...')*/ }   
+                                    }
+                                );
+			}
+		});
+		$j('#slider-input2').blur(function(){
+			var slider1Value = $j("#slider-input2").attr("value"); 
+			if(slider1Value >= slider2Min && slider1Value <= slider2Max){
+				$j('.slider2').slider('moveTo',slider1Value);
+			}else{
+				alert('Please enter a value between '+slider1Min+' and '+slider1Max);
+				return false;
+			}
+		});
+	});
+</script>
+
+	<div class="note">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nec ornare massa. Pellentesque lorem nibh, sollicitudin ut scelerisque in, elementum et leo. Cras ullamcorper, nisi a vestibulum feugiat, leo justo porttitor sapien, </div>
+        <% form_tag  home_action_path("slider") do %>
+	<div class="slidecont">
+		<div class="box"><div id="slider" class="slider1"></div><div class="num"><%= text_field_tag "slider-input1", "1", :class => "numvalue" %></div></div> <!--input id="slider-input1" class="numvalue" type="text" value="1" readonly/-->
+		<div class="box"><div id="slider" class="slider2"></div><div class="num"><%= text_field_tag "slider-input2", "1", :class => "numvalue" %></div></div> <!--input id="slider-input2" class="numvalue" type="text" value="1" readonly/-->
+	</div>
+        <%= submit_tag "Go !!", :class => "block" %>
+        <% end %>
+        <span id="graph">
+            <% for graph in @graphs %>
+                <%= render :partial => "controls/graph", :object => graph.url, :locals => {:id => graph.id} %>
+            <% end %>
+        </span>

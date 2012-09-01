@@ -1,0 +1,42 @@
+<% product = graph %>
+<%
+    titles = '|'
+    unless product.type == String
+        if product.chart_type.include? "Category"
+            for cat in Product::CATEGORY
+                titles += "#{cat}|"
+            end
+        elsif product.chart_type.include? "Product Class"
+            for p_class in Product::PRODUCT_CLASS
+                titles += "#{p_class}|"
+            end
+        elsif product.chart_type.include? "Product Sub Class"
+            for ps_class in Product::SUB_CLASS
+                titles += "#{ps_class}|"
+            end
+        end
+    end
+%>
+	<div id="ticker_<%=id%>" class="capsuleCase span1">
+        	<div class="capsuleBTop span3">
+                  <span class="size2 color1 bold"><%= product.type == String ? "Graph Heading" : product.chart_type %> <label id="graph_id"><%= product.type == String ? id : (product.chart_type.include? "Margin") ? '(in %)' : '(in $100\'s)' %></label> </span>
+        	</div><!-- /capsuleTop -->
+            <div class="capsuleBCenter span3 span5">
+            <div class="capsuleBContent">
+            <%= 
+                if product.type == String
+                    image_tag("#{product}&chs=495x199&chbh=50,10,55&chf=bg,s,EDEDED", :alt => "", :onclick => "window.open('#{graph_path(id)}')") 
+                else
+                    image_tag("#{product.url}&chs=515x199&chbh=50,10,55&chf=bg,s,EDEDED&chm=N*,000000,0,-1,11&chxt=t&chxl=0:#{titles}", :alt => "", :onclick => "window.open('#{graph_path(id)}')") 
+                end
+            %> <!-- &chm=N*c$1*,000000,0,-1,11 -->
+            </div><!-- /capsuleCenter -->
+            
+            <div class="capsuleBBottom size2 color3">
+                <center>
+                        <%= product.type == String ? "Graph Heading" : product.chart_type %>
+                        <label><%= product.type == String ? id : (product.chart_type.include? "Margin") ? '(in %)' : '(in $100\'s)' %></label>
+                </center>
+            </div><!--- capsuleContent -->
+            </div><!-- /capsuleBottom -->
+        </div><!-- /capsuleCase -->

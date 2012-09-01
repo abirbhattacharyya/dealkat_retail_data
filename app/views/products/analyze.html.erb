@@ -1,0 +1,34 @@
+<%
+    @title = "Analyze, Share and collaborate on data, simple to use."
+    @sub_title = ""
+%>
+<% for graph in @graphs %>
+       <%
+          if Rating.find_by_graph_id(graph.id)
+              @like_count = Rating.find(:last, :select => ["count(id) as 'cnt'"], :conditions => ["rate=1 and graph_id=#{graph.id}"])
+              @dislike_count = Rating.find(:last, :select => ["count(id) as 'cnt'"], :conditions => ["rate=0 and graph_id=#{graph.id}"])
+              @like = @like_count.cnt
+              @dislike = @dislike_count.cnt
+          else
+              @like = 0
+              @dislike = 0
+          end
+          comments = Comment.find_all_by_graph_id(graph.id, :order => "id desc")
+       %>
+       <%= render :partial => "controls/graph", :object => graph, :locals => {:id => graph.id} %>
+
+       <div class="ratecomment" id="ratecomment_<%=graph.id%>">
+       		<div id="rating_<%=graph.id%>" class="ratenav"><%=@like%><span class="ilike" onclick="rate_up(<%=graph.id%>)">Like</span><%=@dislike%><span class="idislike" onclick="rate_down(<%=graph.id%>)">Dislike</span> <%=link_to "Analyze", home_action_path("slider")%> <%=link_to "Share", product_action_path("send", graph.id)%> <a onclick="show_hide('comment_<%=graph.id%>')">Comment</a>  <label class="error"><%=@message %></label></div>
+                <span id="comment_<%=graph.id%>" style="display:none">
+                    <% form_tag graph_action_path(graph.id) do %>
+                        <div class="required_bid">
+                            <%= text_area_tag :comment, "", :class => "comment", :onkeyup => "charCount(this.id,'comment_char_#{graph.id}',140);" %>
+                            <br /><label id="comment_char_<%=graph.id%>">0/140 characters</label>
+                        </div>
+                        <%= submit_tag "Submit", :class => "block" %>
+                    <% end %>
+                </span>
+                <%= render :partial => "controls/comments", :object => comments %>
+       	</div>
+        <p id="last_<%=graph.id%>"></p>
+<% end %>

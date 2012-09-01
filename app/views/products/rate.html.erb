@@ -1,0 +1,9 @@
+<div class="ratecomment" id="ratecomment_<%=@id%>">
+        <span id="rating_<%=@id%>">
+            <div class="ratenav"><%=@like%><span class="ilike" onclick="rate_up(<%=@id%>)">Like</span><%=@dislike%><span class="idislike" onclick="rate_down(<%=@id%>)">Dislike</span> <%=link_to "Analyze", home_action_path("slider")%> <%=link_to "Share", product_action_path("send",@id)%> <a onclick="show_hide('comment_<%=@id%>')">Comment</a>  <label class="error"><%=@message %></label></div>
+            <span id="comment_<%=@id%>" style="display:none">
+                <% form_tag graph_action_path(@id) do %><%= text_area_tag :comment, "", :class => "comment" %><%= submit_tag :Submit, :class => "block" %><% end %>
+            </span>
+            <%= render :partial => "controls/comments", :object => @comments %>
+        </span>
+</div>

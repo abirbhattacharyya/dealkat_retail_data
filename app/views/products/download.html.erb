@@ -1,0 +1,15 @@
+<%
+    @title = "Download your data whenever you want. Or receive it via email."
+    @sub_title = ""
+%>
+
+<% form_tag product_action_path("download") do %>
+        <textarea class="uploadtextarea">You get your data in a CSV file with the following item level variables.  Include: Category, Class, Sub-Class, Cost, Margin, UPC Code, Age, MSRP, Promotional Price, Model, Color.</textarea>
+        <br /><br />
+        <%= image_submit_tag("/images/download.jpg", :name => "commit") %>
+        <div class="required">
+              <h4><label>My Email Address:</label></h4>
+              <%= text_field_tag :emails %>
+        </div>
+        <%= submit_tag "Send me the data!", :class => "block"  %>
+<% end %>
